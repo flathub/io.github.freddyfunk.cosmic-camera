@@ -1,0 +1,58 @@
+name: Update cargo-sources.json
+
+on:
+  pull_request:
+    paths:
+      - 'io.github.freddyfunk.cosmic-camera.yml'
+
+jobs:
+  update-cargo-sources:
+    # Only run on PRs from flathubbot (external data checker)
+    if: github.actor == 'flathubbot'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract tag from manifest
+        id: get_tag
+        run: |
+          TAG=$(grep -oP '^\s+tag:\s+\K.*' io.github.freddyfunk.cosmic-camera.yml | head -1)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Found tag: $TAG"
+
+      - name: Fetch Cargo.lock from upstream
+        run: |
+          TAG="${{ steps.get_tag.outputs.tag }}"
+          curl -sLo Cargo.lock "https://raw.githubusercontent.com/FreddyFunk/cosmic-camera/${TAG}/Cargo.lock"
+          echo "Downloaded Cargo.lock for $TAG"
+
+      - name: Install Python dependencies
+        run: pip install aiohttp toml tomlkit
+
+      - name: Generate cargo-sources.json
+        run: |
+          curl -sLo flatpak-cargo-generator.py https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/master/cargo/flatpak-cargo-generator.py
+          python3 flatpak-cargo-generator.py Cargo.lock -o cargo-sources.json
+          rm flatpak-cargo-generator.py Cargo.lock
+          echo "Generated cargo-sources.json"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add cargo-sources.json
+
+          if git diff --staged --quiet; then
+            echo "No changes to cargo-sources.json"
+          else
+            git commit -m "Update cargo-sources.json for ${{ steps.get_tag.outputs.tag }}"
+            git push
+            echo "Pushed updated cargo-sources.json"
+          fi
