@@ -52,8 +52,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/FreddyFunk/cosmic-camera.git
-        tag: v0.1.6
-        commit: 9197fd1f3d7c7a286d3e555c2a90b03768de42c3
+        tag: v0.1.9
+        commit: 0d9f14411a62f6c22ecb803929063eb19f41e43c
+        x-checker-data:
+          type: git
+          tag-pattern: "^v([\\d.]+)$"
+          is-main-source: true
       - cargo-sources.json
 
   # Note: No additional GStreamer plugins needed - app uses pipewiresrc which is
