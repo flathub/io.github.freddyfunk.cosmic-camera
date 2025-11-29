@@ -46,17 +46,19 @@ modules:
       # Install desktop file
       - install -Dm644 resources/io.github.freddyfunk.cosmic-camera.desktop -t /app/share/applications/
       # Install icon
-      - install -Dm644 resources/icons/hicolor/scalable/apps/io.github.freddyfunk.cosmic-camera.svg -t /app/share/icons/hicolor/scalable/apps/
+      - install -Dm644 resources/icons/hicolor/scalable/apps/io.github.freddyfunk.cosmic-camera.svg
+        -t /app/share/icons/hicolor/scalable/apps/
       # Install metainfo
-      - install -Dm644 resources/io.github.freddyfunk.cosmic-camera.metainfo.xml -t /app/share/metainfo/
+      - install -Dm644 resources/io.github.freddyfunk.cosmic-camera.metainfo.xml -t
+        /app/share/metainfo/
     sources:
       - type: git
         url: https://github.com/FreddyFunk/cosmic-camera.git
-        tag: v0.1.9
-        commit: 0d9f14411a62f6c22ecb803929063eb19f41e43c
+        tag: v0.1.10
+        commit: c82e425d6e8463d6ab6acdee5f37380cf68c316c
         x-checker-data:
           type: git
-          tag-pattern: "^v([\\d.]+)$"
+          tag-pattern: ^v([\d.]+)$
           is-main-source: true
       - cargo-sources.json
 
