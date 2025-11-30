@@ -54,8 +54,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/FreddyFunk/cosmic-camera.git
-        tag: v0.1.10
-        commit: c82e425d6e8463d6ab6acdee5f37380cf68c316c
+        tag: v0.1.11
+        commit: 695d915b2ce6e0d5b221ebeb866a93d7f0271c76
         x-checker-data:
           type: git
           tag-pattern: ^v([\d.]+)$
