@@ -3,7 +3,7 @@ name: Update cargo-sources.json
 on:
   pull_request:
     paths:
-      - 'io.github.freddyfunk.cosmic-camera.yml'
+      - 'io.github.cosmicutils.camera.yml'
 
 jobs:
   update-cargo-sources:
@@ -22,14 +22,14 @@ jobs:
       - name: Extract tag from manifest
         id: get_tag
         run: |
-          TAG=$(grep -oP '^\s+tag:\s+\K.*' io.github.freddyfunk.cosmic-camera.yml | head -1)
+          TAG=$(grep -oP '^\s+tag:\s+\K.*' io.github.cosmicutils.camera.yml | head -1)
           echo "tag=$TAG" >> $GITHUB_OUTPUT
           echo "Found tag: $TAG"
 
       - name: Fetch Cargo.lock from upstream
         run: |
           TAG="${{ steps.get_tag.outputs.tag }}"
-          curl -sLo Cargo.lock "https://raw.githubusercontent.com/FreddyFunk/cosmic-camera/${TAG}/Cargo.lock"
+          curl -sLo Cargo.lock "https://raw.githubusercontent.com/cosmic-utils/camera/${TAG}/Cargo.lock"
           echo "Downloaded Cargo.lock for $TAG"
 
       - name: Install Python dependencies
