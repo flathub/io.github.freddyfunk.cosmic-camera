@@ -45,22 +45,20 @@ modules:
       - install -Dm755 target/release/camera /app/bin/camera
       # Install desktop file (rename to match app-id and update internal references)
       - sed 's/io.github.cosmicutils.camera/io.github.freddyfunk.cosmic-camera/g'
-        resources/io.github.cosmicutils.camera.desktop > /tmp/io.github.freddyfunk.cosmic-camera.desktop &&
-        install -Dm644 /tmp/io.github.freddyfunk.cosmic-camera.desktop
-        /app/share/applications/io.github.freddyfunk.cosmic-camera.desktop
+        resources/io.github.cosmicutils.camera.desktop > /tmp/io.github.freddyfunk.cosmic-camera.desktop
+        && install -Dm644 /tmp/io.github.freddyfunk.cosmic-camera.desktop /app/share/applications/io.github.freddyfunk.cosmic-camera.desktop
       # Install icon (rename to match app-id)
       - install -Dm644 resources/icons/hicolor/scalable/apps/io.github.cosmicutils.camera.svg
         /app/share/icons/hicolor/scalable/apps/io.github.freddyfunk.cosmic-camera.svg
       # Install metainfo (rename to match app-id and update internal ID)
       - sed 's/io.github.cosmicutils.camera/io.github.freddyfunk.cosmic-camera/g'
-        resources/io.github.cosmicutils.camera.metainfo.xml > /tmp/io.github.freddyfunk.cosmic-camera.metainfo.xml &&
-        install -Dm644 /tmp/io.github.freddyfunk.cosmic-camera.metainfo.xml
-        /app/share/metainfo/io.github.freddyfunk.cosmic-camera.metainfo.xml
+        resources/io.github.cosmicutils.camera.metainfo.xml > /tmp/io.github.freddyfunk.cosmic-camera.metainfo.xml
+        && install -Dm644 /tmp/io.github.freddyfunk.cosmic-camera.metainfo.xml /app/share/metainfo/io.github.freddyfunk.cosmic-camera.metainfo.xml
     sources:
       - type: git
         url: https://github.com/cosmic-utils/camera.git
-        tag: v0.1.14
-        commit: 31fcc73be7848909f6a7258679c973a4e377fc2a
+        tag: v0.1.15
+        commit: 796e4d958f19a010246ccf3b8ff817a6478fc529
         x-checker-data:
           type: git
           tag-pattern: ^v([\d.]+)$
