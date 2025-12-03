@@ -43,14 +43,21 @@ modules:
       - cargo --offline build --release --verbose
       # Install the binary
       - install -Dm755 target/release/camera /app/bin/camera
-      # Install desktop file
-      - install -Dm644 resources/io.github.cosmicutils.camera.desktop -t /app/share/applications/
-      # Install icon
+      # Install desktop file (rename to match app-id and update internal references)
+      - sed 's/io.github.cosmicutils.camera/io.github.freddyfunk.cosmic-camera/g'
+        resources/io.github.cosmicutils.camera.desktop >
+        /tmp/io.github.freddyfunk.cosmic-camera.desktop
+      - install -Dm644 /tmp/io.github.freddyfunk.cosmic-camera.desktop
+        /app/share/applications/io.github.freddyfunk.cosmic-camera.desktop
+      # Install icon (rename to match app-id)
       - install -Dm644 resources/icons/hicolor/scalable/apps/io.github.cosmicutils.camera.svg
-        -t /app/share/icons/hicolor/scalable/apps/
-      # Install metainfo
-      - install -Dm644 resources/io.github.cosmicutils.camera.metainfo.xml -t
-        /app/share/metainfo/
+        /app/share/icons/hicolor/scalable/apps/io.github.freddyfunk.cosmic-camera.svg
+      # Install metainfo (rename to match app-id and update internal ID)
+      - sed 's/io.github.cosmicutils.camera/io.github.freddyfunk.cosmic-camera/g'
+        resources/io.github.cosmicutils.camera.metainfo.xml >
+        /tmp/io.github.freddyfunk.cosmic-camera.metainfo.xml
+      - install -Dm644 /tmp/io.github.freddyfunk.cosmic-camera.metainfo.xml
+        /app/share/metainfo/io.github.freddyfunk.cosmic-camera.metainfo.xml
     sources:
       - type: git
         url: https://github.com/cosmic-utils/camera.git
