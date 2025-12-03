@@ -41,8 +41,8 @@ modules:
     build-commands:
       - cargo --offline fetch --manifest-path Cargo.toml --verbose
       - cargo --offline build --release --verbose
-      # Install the binary
-      - install -Dm755 target/release/cosmic-camera -t /app/bin/
+      # Install the binary (upstream changed crate name from cosmic-camera to camera in v0.1.14)
+      - install -Dm755 target/release/camera /app/bin/cosmic-camera
       # Install desktop file
       - install -Dm644 resources/io.github.freddyfunk.cosmic-camera.desktop -t /app/share/applications/
       # Install icon
